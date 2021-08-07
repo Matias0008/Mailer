@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+<div class="container-fluid">
+<h1 class="fw-bold">{% block title %}{% endblock %}Correos enviados</h1>
+</div>
+{% endblock%}
+
+
+{% block content %}
+<div class="container-fluid">
+<ul>
+
+    {% if not mails %}
+    {% if not request.args.get('buscar') %}
+        <h1 class="fs-3">¡No hay nada por acá!<br> No tengas miedo y comenza a enviar correos.</h1>
+    {% endif %}
+    {% endif %}
+
+    {% if not mails %}
+    {% if request.args.get('buscar') %}
+        <h1 class="fs-3 text-danger">Correo no encontrado.</h1>
+    {% endif %}
+    {% endif %}
+
+    {% for mail in mails %}
+    <li class="mail fs-5">
+        <span class="mail-mail text-primary">{{ mail['email'] }}</span>
+        <span class="subject">{{ mail['subject'] }}</span>
+        <hr />
+        <p class="mail-content text-muted">{{ mail['content'] }}</p>
+    </li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
